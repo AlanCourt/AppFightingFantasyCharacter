@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/textHab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -47,22 +47,24 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/maisHab"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:elevation="0dp"
+            android:onClick="aumentarHab"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/mais" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/menosHab"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:onClick="diminuirHab"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/menos" />
 
@@ -94,7 +96,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/textEne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -106,22 +108,24 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/maisEne"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:elevation="0dp"
+            android:onClick="aumentarEne"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/mais" />
 
         <ImageButton
-            android:id="@+id/imageButton6"
+            android:id="@+id/menosEne"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:onClick="diminuirEne"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/menos" />
     </LinearLayout>
@@ -152,7 +156,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/textSor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -164,22 +168,24 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/maisSor"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:elevation="0dp"
+            android:onClick="aumentarSor"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/mais" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/menosSor"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:onClick="diminuirSor"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/menos" />
 
