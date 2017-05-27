@@ -8,7 +8,6 @@ import com.example.alanc.appfightingfantasycharacter.model.FichaDados;
 
 public interface FichaDadosDao {
     public void inserir(FichaDados fichaDados);
-    public void excluir(FichaDados fichaDados);
     public void atualizar(FichaDados fichaDados);
     public FichaDados procurarPorId(int id);
 }
