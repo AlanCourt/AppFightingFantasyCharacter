@@ -69,13 +69,13 @@ public class FichaDadosDaoBd implements FichaDadosDao {
                 "id = ?",new String[]{String.valueOf(id)},
                 null,null,null);
 
-        if(cursor.moveToNext()){
+        /*if(cursor.moveToNext()){
             int idX = cursor.getInt(cursor.getColumnIndex("id"));
             String nome = cursor.getString(cursor.getColumnIndex("nome"));
             String descricao = cursor.getString(cursor.getColumnIndex("descricao"));
             FichaDados fichaDados = new FichaDados(idX, nome, descricao);
             return fichaDados;
-        }
+        }*/
         return null;
     }
 }
