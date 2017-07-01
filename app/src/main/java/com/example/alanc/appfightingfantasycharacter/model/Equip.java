@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 public class Equip implements Serializable {
 
-    private String id;
-    private String nome;
-    private String descricao;
+    public String id;
+    public String nome;
+    public String descricao;
 
     public Equip() {
     }

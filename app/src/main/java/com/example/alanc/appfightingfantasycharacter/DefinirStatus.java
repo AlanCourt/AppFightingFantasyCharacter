@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.alanc.appfightingfantasycharacter.model.Status;
+
 import java.util.Random;
 
 public class DefinirStatus extends AppCompatActivity {
@@ -19,10 +21,25 @@ public class DefinirStatus extends AppCompatActivity {
     Random ran;
     int numDado1, numDado2;
 
+    Status status = new Status();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_definir_status);
+
+        status.setHabilidade(0);
+        status.setHabilidadeIni(0);
+        status.setEnergia(0);
+        status.setEnergiaIni(0);
+        status.setSorte(0);
+        status.setSorteIni(0);
+        status.setJoias(0);
+        status.setOuro(0);
+        status.setPagina(0);
+        status.setProvisoes(0);
+
+        ControlLifeCycleAllApp.myRef.child("Equip").removeValue();
 
         b_dadoHab = (Button) findViewById(R.id.b_dadoHab);
         b_dadoEne = (Button) findViewById(R.id.b_dadoEne);
@@ -49,6 +66,9 @@ public class DefinirStatus extends AppCompatActivity {
     public  void DadoHab (View v) {
         jogDado();
         hab.setText(String.valueOf(numDado1 + 6));
+        status.setHabilidadeIni(numDado1 + 6);
+        status.setHabilidade(numDado1 + 6);
+
         b_dadoHab.setVisibility(View.GONE);
         b_dadoEne.setVisibility(View.VISIBLE);
         /*i_dado2.setVisibility(View.VISIBLE);*/
@@ -57,6 +77,9 @@ public class DefinirStatus extends AppCompatActivity {
     public  void DadoEne (View v) {
         jogDado();
         ene.setText(String.valueOf(numDado1 + numDado2 + 12));
+        status.setEnergiaIni(numDado1 + numDado2 + 12);
+        status.setEnergia(numDado1 + numDado2 + 12);
+
         b_dadoEne.setVisibility(View.GONE);
         b_dadoSor.setVisibility(View.VISIBLE);
        /*i_dado2.setVisibility(View.GONE);*/
@@ -65,6 +88,9 @@ public class DefinirStatus extends AppCompatActivity {
     public  void DadoSor (View v) {
         jogDado();
         sor.setText(String.valueOf(numDado1 + 6));
+        status.setSorteIni(numDado1 + 6);
+        status.setSorte(numDado1 + 6);
+
         b_dadoSor.setVisibility(View.GONE);
         /*i_dado1.setVisibility(View.GONE);*/
 
@@ -72,6 +98,8 @@ public class DefinirStatus extends AppCompatActivity {
     }
 
     public void Continue(View v) {
+
+        ControlLifeCycleAllApp.myRef.child("Status").setValue(status);
         finish();
     }
 

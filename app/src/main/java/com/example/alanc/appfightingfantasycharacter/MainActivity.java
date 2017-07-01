@@ -1,13 +1,20 @@
 package com.example.alanc.appfightingfantasycharacter;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.alanc.appfightingfantasycharacter.model.Status;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -17,12 +24,13 @@ public class MainActivity extends AppCompatActivity {
     ImageButton maisHab, menosHab, maisEne, menosEne, maisSor, menosSor;
     ImageView i_dado1, i_dado2;
     TextView textHab, textEne, textSor;
+    TextView textHabIni, textEneIni, textSorIni;
 
     Random ran;
     int numDado1, numDado2;
 
     int valorHab, valorEne, valorSor;
-    int novoJogo;
+    int valorHabIni, valorEneIni, valorSorIni;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +49,60 @@ public class MainActivity extends AppCompatActivity {
         textEne = (TextView) findViewById(R.id.textEne);
         textSor = (TextView) findViewById(R.id.textSor);
 
+        textHabIni = (TextView) findViewById(R.id.textHabIni);
+        textEneIni = (TextView) findViewById(R.id.textEneIni);
+        textSorIni = (TextView) findViewById(R.id.textSorIni);
+
         i_dado1 = (ImageView) findViewById(R.id.i_dado1);
         i_dado2 = (ImageView) findViewById(R.id.i_dado2);
 
         ran = new Random();
 
-        if (novoJogo == 0) {
-            Intent it = new Intent(this,DefinirStatus.class);
-            startActivity(it);
-        }
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
-        novoJogo = 1;
-        textHab.setText(String.valueOf(valorHab));
-        textEne.setText(String.valueOf(valorEne));
-        textSor.setText(String.valueOf(valorSor));
+        ControlLifeCycleAllApp.myRef.child("Status").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Status status = dataSnapshot.getValue(Status.class);
+
+                valorHab = status.getHabilidade();
+                valorEne = status.getEnergia();
+                valorSor = status.getSorte();
+
+                valorHabIni = status.getHabilidadeIni();
+                valorEneIni = status.getEnergiaIni();
+                valorSorIni = status.getSorteIni();
+
+                textHabIni.setText(String.valueOf(valorHabIni));
+                textEneIni.setText(String.valueOf(valorEneIni));
+                textSorIni.setText(String.valueOf(valorSorIni));
+
+                textHab.setText(String.valueOf(valorHab));
+                textEne.setText(String.valueOf(valorEne));
+                textSor.setText(String.valueOf(valorSor));
+
+                if (valorHabIni == 0 && valorEneIni == 0 && valorSorIni == 0) {
+
+                    Intent it = new Intent(MainActivity.this,DefinirStatus.class);
+                    startActivity(it);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
 
     }
 
-    public void aumentarHab (View v) {
+    public void aumentarHab(View v) {
 
         valorHab = valorHab + 1;
         textHab.setText(String.valueOf(valorHab));
@@ -140,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void abrirEquipamentos (View v) {
         Intent it = new Intent(this,Equipamentos.class);
+        startActivity(it);
+    }
+
+    public void novoJogo (View v) {
+        Intent it = new Intent(MainActivity.this,DefinirStatus.class);
         startActivity(it);
     }
 
