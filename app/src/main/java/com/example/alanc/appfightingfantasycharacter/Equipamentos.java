@@ -9,9 +9,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.alanc.appfightingfantasycharacter.adapter.EquipAdapter;
-import com.example.alanc.appfightingfantasycharacter.dao.EquipDao;
-import com.example.alanc.appfightingfantasycharacter.dao.bd.EquipDaoBd;
 import com.example.alanc.appfightingfantasycharacter.model.Equip;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class Equipamentos extends AppCompatActivity {
 
     List<Equip> listaEquip = new ArrayList<>();
     EquipAdapter adaptador;
+
+    Equip equipSelec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +40,11 @@ public class Equipamentos extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Equip equip = listaEquip.get(position);
+
+                        equipSelec = listaEquip.get(position);
 
                         Intent it = new Intent(Equipamentos.this, DetalheItem.class);
-                        it.putExtra("equip",equip);
+                        it.putExtra("equip",equipSelec);
                         startActivity(it);
                     }
                 }
@@ -50,10 +55,23 @@ public class Equipamentos extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        EquipDao dao = new EquipDaoBd(this);
-        listaEquip = dao.listar();
-        adaptador.setListaEquip(listaEquip);
-        adaptador.notifyDataSetChanged();
+
+        ControlLifeCycleAllApp.myRef.child("Equip").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listaEquip.clear();
+                for (DataSnapshot objSnapshot:dataSnapshot.getChildren()) {
+                    Equip e = objSnapshot.getValue(Equip.class);
+                    listaEquip.add(e);
+                }
+                adaptador.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void abrirNovoItem(View v){

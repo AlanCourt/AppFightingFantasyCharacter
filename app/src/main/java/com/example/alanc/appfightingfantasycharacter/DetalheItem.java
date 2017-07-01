@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.alanc.appfightingfantasycharacter.dao.EquipDao;
-import com.example.alanc.appfightingfantasycharacter.dao.bd.EquipDaoBd;
 import com.example.alanc.appfightingfantasycharacter.model.Equip;
 
 public class DetalheItem extends AppCompatActivity {
@@ -32,19 +30,27 @@ public class DetalheItem extends AppCompatActivity {
 
 
     public void editar(View v){
-        equipEditar.setNome(editTextNome.getText().toString());
-        equipEditar.setDescricao(editTextDescricao.getText().toString());
 
-        EquipDao dao = new EquipDaoBd(this);
-        dao.atualizar(equipEditar);
+        Equip e = new Equip();
+        e.setId(equipEditar.getId());
+        e.setNome(editTextNome.getText().toString().trim());
+        e.setDescricao(editTextDescricao.getText().toString().trim());
+
+        ControlLifeCycleAllApp.myRef.child("Equip").child(e.getId()).setValue(e);
+        limparCampos();
+
         Toast.makeText(this,"Edição realizada com sucesso!", Toast.LENGTH_SHORT)
                 .show();
         finish();
     }
 
     public void excluir(View v){
-        EquipDao dao = new EquipDaoBd(this);
-        dao.excluir(equipEditar);
+
+        Equip e = new Equip();
+        e.setId(equipEditar.getId());
+        ControlLifeCycleAllApp.myRef.child("Equip").child(e.getId()).removeValue();
+        limparCampos();
+
         Toast.makeText(this,"Exclusão realizada com sucesso!",Toast.LENGTH_SHORT)
                 .show();
         finish();
@@ -52,5 +58,10 @@ public class DetalheItem extends AppCompatActivity {
 
     public void cancelar(View v){
         finish();
+    }
+
+    private void limparCampos() {
+        editTextNome.setText("");
+        editTextDescricao.setText("");
     }
 }

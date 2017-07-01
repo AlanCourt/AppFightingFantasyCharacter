@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="editar"
-            android:text="Editar" />
+            android:text="Salvar" />
 
         <Button
             android:id="@+id/button5"

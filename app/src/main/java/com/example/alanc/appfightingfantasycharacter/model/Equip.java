@@ -7,22 +7,15 @@ import java.io.Serializable;
  */
 
 public class Equip implements Serializable {
-    private int id;
+
+    private String id;
     private String nome;
     private String descricao;
 
-    public Equip(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
+    public Equip() {
     }
 
-    public Equip(int id, String nome, String descricao) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -34,6 +27,8 @@ public class Equip implements Serializable {
         return descricao;
     }
 
+    public void setId(String id) { this.id = id; }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -41,4 +36,5 @@ public class Equip implements Serializable {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
 }

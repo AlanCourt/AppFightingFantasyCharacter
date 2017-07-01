@@ -7,11 +7,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.alanc.appfightingfantasycharacter.R;
-import com.example.alanc.appfightingfantasycharacter.dao.EquipDao;
-import com.example.alanc.appfightingfantasycharacter.dao.bd.EquipDaoBd;
 import com.example.alanc.appfightingfantasycharacter.model.Equip;
 
+import java.util.UUID;
+
 public class CadastroNovoItem extends AppCompatActivity {
+
+    EditText editTextNome, editTextDescricao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,15 +22,27 @@ public class CadastroNovoItem extends AppCompatActivity {
     }
 
     public void cadastrar(View v){
-        EditText editTextNome = (EditText) findViewById(R.id.editTextNome);
-        EditText editTextDescricao = (EditText) findViewById(R.id.editTextDescricao);
-        Equip equip = new Equip(editTextNome.getText().toString(),
-                editTextDescricao.getText().toString());
-        EquipDao dao = new EquipDaoBd(this);
-        dao.inserir(equip);
+        editTextNome = (EditText) findViewById(R.id.editTextNome);
+        editTextDescricao = (EditText) findViewById(R.id.editTextDescricao);
+
+        Equip equip = new Equip();
+
+        equip.setId(UUID.randomUUID().toString());
+        equip.setNome(editTextNome.getText().toString());
+        equip.setDescricao(editTextDescricao.getText().toString());
+
+        ControlLifeCycleAllApp.myRef.child("Equip").child(equip.getId()).setValue(equip);
+
         Toast.makeText(this,"Novo item cadastrado com sucesso!",Toast.LENGTH_SHORT)
                 .show();
+
+        limparCampos();
         finish();
+    }
+
+    private void limparCampos() {
+        editTextNome.setText("");
+        editTextDescricao.setText("");
     }
 
     public void cancelar(View v){
